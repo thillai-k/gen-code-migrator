@@ -178,7 +178,7 @@ export default function WebForm() {
                             <div className="row">
                                 <div className="col-6">
                                     <div className="bg-info rounded p-3 h-100">
-                                        <h4>Source Code</h4>
+                                        <h4 className="border-bottom pb-1">Source Code</h4>
                                         <FileUploader
                                             onFileUpload={handleFileUpload}
                                         />
@@ -194,7 +194,7 @@ export default function WebForm() {
                                 </div>
                                 <div className="col-6">
                                     <div className="bg-info rounded p-3 h-100">
-                                        <h4>Converted Code</h4>
+                                        <h4 className="border-bottom pb-1">Converted Code</h4>
                                         <CodeEditor
                                             label="Converted Code"
                                             name="target_code"
@@ -219,13 +219,13 @@ export default function WebForm() {
                                         class="progress"
                                         role="progressbar"
                                         aria-label="Default striped example"
-                                        aria-valuenow="10"
+                                        aria-valuenow={progress}
                                         aria-valuemin="0"
                                         aria-valuemax="100"
                                     >
                                         <div
                                             class="progress-bar progress-bar-striped"
-                                            style={{width: "10%"}}
+                                            style={{width:`${progress}%`}}
                                         ></div>
                                     </div>
                                 </Button>
