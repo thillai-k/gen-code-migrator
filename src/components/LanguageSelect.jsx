@@ -5,7 +5,7 @@ export default function LanguageSelect({ label, value, onChange, register, error
 
   return (
     <div className="mb-3">
-      <label className="d-block text-light fw-bold">{label}</label>
+      <label className="mb-1">{label}</label>
       <select
         className="form-select"
         value={value}
