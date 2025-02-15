@@ -16,13 +16,16 @@
 // App.js
 import React from "react";
 import WebForm from "./pages/WebForm";
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./styles/global.css";
 
+import Header from "./components/header/Header";
+
 export default function App() {
-  return (
-    <div className="">
-    <WebForm />
-  </div>
-  );
+    return (
+        <div className="min-vh-100 bg-body-secondary">
+            <Header />
+            <WebForm />
+        </div>
+    );
 }

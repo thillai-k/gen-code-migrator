@@ -8,7 +8,8 @@ export default function CodeEditor({
   setCode, 
   language, 
   zipFileUrl, // ✅ New prop for ZIP file download link
-  selectedRepo
+  selectedRepo,
+  showDownloadBtn
 }) {
   const getLanguageLogo = (lang) => {
     const logos = {
@@ -60,7 +61,12 @@ export default function CodeEditor({
 
   return (
     <div className="code-editor-container">
-        {selectedRepo && ( // ✅ Show download button only if ZIP file link exists
+      {!isSource && selectedRepo  !== "Local Repo" && (
+        <button type="button" className="btn btn-primary mt-3 mb-4 w-100" onClick={handleCopy}>
+          Copy Code
+        </button>
+      )}
+        {selectedRepo && showDownloadBtn && ( // ✅ Show download button only if ZIP file link exists
         <button type="button" className="btn btn-success mt-2" onClick={handleDownloadZip}>
           Download ZIP
         </button>
@@ -71,19 +77,14 @@ export default function CodeEditor({
         <span className="language-name">{language}</span>
       </div>
       <textarea
-        className="form-control bg-dark text-white p-3 mb-2"
+        className="form-control p-3 mb-2"
         name={name}
         rows="6"
         value={code}
         onChange={(e) => setCode(e.target.value)}
         readOnly={!isSource} // ✅ Only allow editing for the source code
+        disabled={selectedRepo}
       />
-      
-      {!isSource && (
-        <button type="button" className="btn btn-primary mt-2 me-2" onClick={handleCopy}>
-          Copy Code
-        </button>
-      )}
 
     </div>
   );

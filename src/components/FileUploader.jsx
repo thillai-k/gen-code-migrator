@@ -27,12 +27,10 @@ export default function FileUploader({ onFileUpload }) {
   };
 
   return (
-    <div
-      className="border p-3 text-center text-white bg-secondary rounded"
+    <div className="my-4"
       onDragOver={handleDragOver}
       onDrop={handleDrop}
     >
-      Drag & Drop a file here or
       <input type="file" className="form-control mt-2" accept=".txt,.js,.py,.java,.php,.r,.go" onChange={handleFileUpload} />
       {fileName && <small className="text-success d-block mt-2">Uploaded: {fileName}</small>}
     </div>
