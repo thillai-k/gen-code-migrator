@@ -103,7 +103,6 @@ export default function WebForm() {
                     `Converted version of: \n`
                 );
                 setZipFile(parsedResult.zip_download_url);
-                console.log(parsedResult.zip_download_url)
             } else {
                 setConfidenceScore(parsedResult.confidence_score ?? 0);
                 setTargetCode(

@@ -2,8 +2,9 @@ import React from "react";
 import GaugeChart from "react-gauge-chart";
 
 const FileStatus = ({ uploadedFiles, convertedFiles, confidenceScore }) => {
-   
-    let PercentageFile = uploadedFiles ?? (convertedFiles/uploadedFiles);
+    let PercentageFile = 0;
+    PercentageFile = (convertedFiles/uploadedFiles);
+    console.log(PercentageFile);
     return (
         <div className="my-4">
             <div className="row">
@@ -77,7 +78,7 @@ const FileStatus = ({ uploadedFiles, convertedFiles, confidenceScore }) => {
                                     nrOfLevels={30}
                                     colors={["#FF5F6D", "#FFC371"]}
                                     arcWidth={0.3}
-                                   
+                                    percent= {PercentageFile ?? 0}
                                     textColor="#4650dd"
                                 />
                             </div>
