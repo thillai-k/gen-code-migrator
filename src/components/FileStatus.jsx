@@ -2,6 +2,8 @@ import React from "react";
 import GaugeChart from "react-gauge-chart";
 
 const FileStatus = ({ uploadedFiles, convertedFiles, confidenceScore }) => {
+   
+    let PercentageFile = uploadedFiles ?? (convertedFiles/uploadedFiles);
     return (
         <div className="my-4">
             <div className="row">
@@ -35,23 +37,6 @@ const FileStatus = ({ uploadedFiles, convertedFiles, confidenceScore }) => {
                     </div>
                 </div>
 
-                {/* Uploaded Files */}
-                {/* <div className="col-md-3 connector">
-          <div className="connector-container">
-            <div className="row justify-content-center">
-              <div className="col-md-4">
-                <div className="box">
-                  <div className="code-readout">{uploadedFiles}</div>
-                </div>
-              </div>
-            </div>
-            <div className="row justify-content-center">
-              <div className="col-md-12 text-center">
-                <div className="connector-title">Uploaded Files</div>
-              </div>
-            </div>
-          </div>
-        </div> */}
 
                 {/* Converted Files */}
                 <div className="col-md-3">
@@ -92,7 +77,7 @@ const FileStatus = ({ uploadedFiles, convertedFiles, confidenceScore }) => {
                                     nrOfLevels={30}
                                     colors={["#FF5F6D", "#FFC371"]}
                                     arcWidth={0.3}
-                                    percent={uploadedFiles ? ((convertedFiles / uploadedFiles) * 100).toFixed(2) : 0}
+                                   
                                     textColor="#4650dd"
                                 />
                             </div>
@@ -114,7 +99,7 @@ const FileStatus = ({ uploadedFiles, convertedFiles, confidenceScore }) => {
                                 <GaugeChart
                                     id="gauge-chart6"
                                     nrOfLevels={15}
-                                    percent={confidenceScore ? (confidenceScore * 100).toFixed(2) : 0}
+                                    percent={(confidenceScore)}
                                     needleColor="#345243"
                                     textColor="#0d6efd"
                                 />

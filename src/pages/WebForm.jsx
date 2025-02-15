@@ -35,7 +35,7 @@ export default function WebForm() {
     const [uploadedFiles, setUploadedFiles] = useState(0); // ✅ Track uploaded files from API
     const [convertedFiles, setConvertedFiles] = useState(0);
     const [accuracy, setConfidenceScore] = useState(0); // ✅ Track converted files from API
-    const [zipFileUrl, setTargetZipFileUrl] = useState("");
+    const [zipFile, setZipFile] = useState("");
 
     // ✅ Fetch file status from API on mount
 
@@ -97,12 +97,13 @@ export default function WebForm() {
 
             setUploadedFiles(parsedResult.total_files ?? 0);
             setConvertedFiles(parsedResult.convertible_files ?? 0);
-            if (parsedResult.convertible_files < 1) {
-                setConfidenceScore(parsedResult.confidence_score ?? 0);
+            if (parsedResult.total_files > 1) {
+                setConfidenceScore(parsedResult.avg_confidence_score ?? 0);
                 setTargetCode(
-                    `Converted version of: \n${parsedResult.avg_converted_code}`
+                    `Converted version of: \n`
                 );
-                setTargetZipFileUrl(parsedResult.zip_download_url);
+                setZipFile(parsedResult.zip_download_url);
+                console.log(parsedResult.zip_download_url)
             } else {
                 setConfidenceScore(parsedResult.confidence_score ?? 0);
                 setTargetCode(
@@ -222,6 +223,7 @@ export default function WebForm() {
                                         code={sourceCode}
                                         setCode={handleCodeChange}
                                         language={sourceLang}
+                                      
                                         selectedRepo={selectedRepo}
                                         showDownloadBtn={false}
                                     />
@@ -244,7 +246,7 @@ export default function WebForm() {
                                         code={targetCode}
                                         setCode={setTargetCode}
                                         language={targetLang}
-                                        zipFileUrl={zipFileUrl}
+                                        zipFileUrl={zipFile}
                                         selectedRepo={selectedRepo}
                                         showDownloadBtn={true}
                                     />

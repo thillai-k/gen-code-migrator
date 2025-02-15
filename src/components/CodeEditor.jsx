@@ -11,6 +11,7 @@ export default function CodeEditor({
   selectedRepo,
   showDownloadBtn
 }) {
+  console.log(zipFileUrl);
   const getLanguageLogo = (lang) => {
     const logos = {
       "AWS EMR Pyspark": "/EMR.svg",
@@ -40,7 +41,15 @@ export default function CodeEditor({
     }
 
     try {
-      const response = await fetch(`https://code-crafter-api-603657590586.us-central1.run.app${zipFileUrl}`);
+      const response = await fetch(
+        `https://code-crafter-api-603657590586.us-central1.run.app${zipFileUrl}`,
+        {
+            method: "GET",
+            mode: "cors",
+        },
+        60000
+    );
+      
       console.log(zipFileUrl);
       if (!response.ok) throw new Error(`Failed to download: ${response.statusText}`);
 
