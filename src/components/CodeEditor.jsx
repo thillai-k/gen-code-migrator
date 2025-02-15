@@ -40,7 +40,7 @@ export default function CodeEditor({
     }
 
     try {
-      const response = await fetch(zipFileUrl);
+      const response = await fetch("https://code-crafter-api-603657590586.us-central1.run.app/download_zip");
       console.log(zipFileUrl);
       if (!response.ok) throw new Error(`Failed to download: ${response.statusText}`);
 
@@ -67,7 +67,7 @@ export default function CodeEditor({
         </button>
       )}
         {selectedRepo && showDownloadBtn && ( // ✅ Show download button only if ZIP file link exists
-        <button type="button" className="btn btn-success mt-2" onClick={handleDownloadZip}>
+        <button type="button" className="btn btn-success mt-3 mb-4 w-100" onClick={handleDownloadZip}>
           Download ZIP
         </button>
       )}
