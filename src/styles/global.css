@@ -56,6 +56,14 @@ textarea {
   margin-top: 50px !important;
 }
 
+.repo-detail-container {
+  height: 100px;
+  background-color: #f5f7fe;
+  border-radius: 10px;
+  border: none;
+  margin-top: 50px !important;
+}
+
 .box {
   border: 1px solid #6989FE;
   border-radius: 8px;
@@ -76,8 +84,26 @@ textarea {
   margin: 10px;
 }
 
+.box .connector-sub-logo {
+  width: 20px;
+  height: 20px;
+  margin: 0 !important;
+}
+
 .box-title {
   font-weight: 500;
+}
+
+.align-contents {
+  align-content: center;
+}
+
+.connector-options {
+  align-content: center;
+}
+
+.title-width {
+  width: 150%;
 }
 
 .connector-title {
@@ -85,6 +111,11 @@ textarea {
   font-weight: bold;
   font-size: 12px;
   color: #0E5A84;
+}
+
+.connector-options-box {
+  margin-bottom: 0 !important;
+  height: 33px;
 }
 
 .connector-sub-title {
@@ -128,13 +159,37 @@ textarea {
   background-color: #D9D9D9;
 }
 
+.convert-btn {
+  margin-top: 0 !important;
+  background-color: #0E5A84 !important;
+  font-family: "DM Sans", serif !important;
+  font-size: 18px !important;
+  font-weight: bold !important;
+  color: #ffffff !important;
+}
+
 .analysis-container {
   justify-content: space-between !important;
+}
+
+.submit-section {
+  margin-top: 33px !important;
+  margin-bottom: 33px;
+}
+
+.checkmark {
+  width: 20px;
+  height: 20px;
 }
 
 .web-form-container {
   max-width: 800px;
   margin: auto;
+}
+
+.options-select {
+  padding: 3px 2px 3px 10px !important;
+  height: 33px;
 }
 
 .app-header {
@@ -181,6 +236,22 @@ textarea {
   align-items: center;
 }
 
+.info-section {
+  font-family: "DM Sans", serif !important;
+  font-size: 18px !important;
+  color: #0E5A84 !important;
+}
+
+.info-detail {
+  margin-bottom: 30px;
+}
+
+.info-detail-container {
+  height: 100px;
+  background-color: #f5f7fe;
+  border-radius: 10px;
+  border: 1px solid #0E5A84;
+}
 .code-editor {
   width: 100%;
   height: 200px;

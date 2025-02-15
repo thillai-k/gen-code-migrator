@@ -4,10 +4,9 @@ export default function LanguageSelect({ label, value, onChange, register, error
   const languages = ["None", "JavaScript", "Python", "Java", "PHP", "R", "Go"];
 
   return (
-    <div className="mb-3">
-      <label className="d-block text-light fw-bold">{label}</label>
+    <div className="connector-options-box">
       <select
-        className="form-select"
+        className="form-select options-select"
         value={value}
         {...(register && register(name, { required: `${label} is required` }))}
         onChange={(e) => onChange(e.target.value)}
