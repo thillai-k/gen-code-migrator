@@ -3,14 +3,15 @@ import React from "react";
 export default function CodeEditor({ label, name, isSource, code, setCode, language }) {
   const getLanguageLogo = (lang) => {
     const logos = {
-      JavaScript: "/logos/js.png",
-      Python: "/logos/python.png",
-      Java: "/logos/java.png",
-      PHP: "/logos/php.png",
-      R: "/logos/r.png",
-      Go: "/logos/go.png",
+      "AWS EMR Pyspark" : "/EMR.svg",
+      "AWS Glue Pyspark":"/glue.svg",
+      "AWS Sagemaker ML Pyspark":"",
+      "Text":"",
+      "SQL":"",
+      "Databricks Pyspark":"/databricks.png",
+      "Databricks ML Pyspark":"",
     };
-    return logos[lang] || "/logos/default.png";
+    return logos[lang] || "/default.png";
   };
 
   const handleCopy = async () => {

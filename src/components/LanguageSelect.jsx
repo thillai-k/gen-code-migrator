@@ -1,7 +1,13 @@
 import React from "react";
 
 export default function LanguageSelect({ label, value, onChange, register, errors, name }) {
-  const languages = ["None", "JavaScript", "Python", "Java", "PHP", "R", "Go"];
+  const languages = ["None", "AWS EMR Pyspark",
+  "AWS Glue Pyspark",
+  "AWS Sagemaker ML Pyspark",
+  "Text",
+  "SQL",
+  "Databricks Pyspark",
+  "Databricks ML Pyspark"];
 
   return (
     <div className="mb-3">
