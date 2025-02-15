@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import InputField from "../components/InputField";
 import SelectField from "../components/SelectFieldRepository";
 import LanguageSelect from "../components/LanguageSelect";
@@ -31,7 +31,8 @@ export default function WebForm() {
     const [uploadedFiles, setUploadedFiles] = useState(0);   // ✅ Track uploaded files from API
     const [convertedFiles, setConvertedFiles] = useState(0);
     const [accuracy, setConfidenceScore] = useState(0); // ✅ Track converted files from API
-
+    const [zipFileUrl, setTargetZipFileUrl] = useState(""); 
+    
     // ✅ Fetch file status from API on mount
 
     // Sync source_code with react-hook-form
@@ -53,8 +54,8 @@ export default function WebForm() {
             setValue("file_name", file.name);
         }
     };
-const [loading, setLoading] = useState(false);
-const onSubmit = async (data) => {
+    const [loading, setLoading] = useState(false);
+    const onSubmit = async (data) => {
     if (loading) return; // Prevent multiple clicks
 
     console.log("Form Submitted:", data);
@@ -63,17 +64,18 @@ const onSubmit = async (data) => {
 
     try {
         const formData = new FormData();
+        if (sourceCode) {
         formData.append("source_code", sourceCode);
         formData.append("file_name", fileName);
+        }
         formData.append("target_code", targetCode);
-
         Object.entries(data).forEach(([key, value]) => formData.append(key, value));
-
         const response = await fetch("https://code-crafter-api-603657590586.us-central1.run.app/convert", {
             method: "POST",
-            mode: "cors",
+            mode: "no-cors",
             body: formData,
-        });
+            
+        },60000);
 
         if (!response.ok) {
             throw new Error(`HTTP ${response.status}: ${await response.text()}`);
@@ -84,8 +86,23 @@ const onSubmit = async (data) => {
 
         setUploadedFiles(parsedResult.total_files ?? 0);
         setConvertedFiles(parsedResult.convertible_files ?? 0);
-        setConfidenceScore(parsedResult.confidence_score ?? 0);
-        setTargetCode(`Converted version of: \n${parsedResult.converted_code}`);
+        if(parsedResult.convertible_files <1 ){
+            setConfidenceScore(parsedResult.confidence_score ?? 0);
+            setTargetCode(`Converted version of: \n${parsedResult.avg_converted_code}`);
+            const contentDisposition = parsedResult.headers.get("Content-Disposition");
+            let filename = "converted_files.zip";
+            if (contentDisposition) {
+                const match = contentDisposition.match(/filename="(.+)"/);
+                if (match && match[1]) {
+                    filename = match[1];
+                }
+            }
+            setTargetZipFileUrl(filename);
+        }else{
+            setConfidenceScore(parsedResult.confidence_score ?? 0);
+            setTargetCode(`Converted version of: \n${parsedResult.converted_code}`);
+        }
+       
         setProgress(100);
     } catch (error) {
         console.error("Error:", error);
@@ -93,6 +110,11 @@ const onSubmit = async (data) => {
         setLoading(false);
     }
 };
+    const [selectedRepo, setSelectedRepo] = useState("");
+    const handleRepoChange = (event) => {
+        
+        setSelectedRepo(event.target.value);
+    };
     return (
         <div className="page-container header">
             <header className="py-3">
@@ -115,14 +137,16 @@ const onSubmit = async (data) => {
                         <SelectField label="Source Repository" name="repositoryType1" register={register} options={["AWS", "GitHub", "Bitbucket"]} />
                     </div>
                     <div className="col-sm-6">
-                        <SelectField label="Target Repository" name="repositoryType2" register={register} options={["AWS", "GitHub", "Bitbucket"]} />
+                        <SelectField label="Target Repository" name="repositoryType2" register={register} options={["AWS", "GitHub", "Bitbucket" , "Local Repo"]}  onChange= {handleRepoChange} />
                     </div>
                     <div className="col-sm-6">
                         <InputField label="Source Path" name="repoPath1" register={register} errors={errors} />
                     </div>
+                    {selectedRepo !== "Local Repo" && (
                     <div className="col-sm-6">
                         <InputField label="Target Path" name="repoPath2" register={register} errors={errors} />
                     </div>
+                       )}
                     <div className="col-sm-6">
                         <LanguageSelect label="Source Language" name="source_format" value={sourceLang} onChange={setSourceLang} register={register} errors={errors} />
                     </div>
@@ -159,6 +183,8 @@ const onSubmit = async (data) => {
                             code={targetCode}
                             setCode={setTargetCode}
                             language={targetLang}
+                            zipFileUrl={zipFileUrl}
+                            selectedRepo= {selectedRepo}
                         />
                     </div>
                 </div>

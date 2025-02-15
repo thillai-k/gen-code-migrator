@@ -1,15 +1,24 @@
 import React from "react";
 
-export default function CodeEditor({ label, name, isSource, code, setCode, language }) {
+export default function CodeEditor({ 
+  label, 
+  name, 
+  isSource, 
+  code, 
+  setCode, 
+  language, 
+  zipFileUrl, // ✅ New prop for ZIP file download link
+  selectedRepo
+}) {
   const getLanguageLogo = (lang) => {
     const logos = {
-      "AWS EMR Pyspark" : "/EMR.svg",
-      "AWS Glue Pyspark":"/glue.svg",
-      "AWS Sagemaker ML Pyspark":"",
-      "Text":"",
-      "SQL":"",
-      "Databricks Pyspark":"/databricks.png",
-      "Databricks ML Pyspark":"",
+      "AWS EMR Pyspark": "/EMR.svg",
+      "AWS Glue Pyspark": "/glue.svg",
+      "AWS Sagemaker ML Pyspark": "",
+      "Text": "",
+      "SQL": "",
+      "Databricks Pyspark": "/databricks.png",
+      "Databricks ML Pyspark": "",
     };
     return logos[lang] || "/default.png";
   };
@@ -23,8 +32,39 @@ export default function CodeEditor({ label, name, isSource, code, setCode, langu
     }
   };
 
+  const handleDownloadZip = async () => {
+    if (!zipFileUrl) {
+      alert("No ZIP file available for download.");
+      return;
+    }
+
+    try {
+      const response = await fetch(zipFileUrl);
+      console.log(zipFileUrl);
+      if (!response.ok) throw new Error(`Failed to download: ${response.statusText}`);
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "code_files.zip"; // ✅ Default ZIP file name
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error downloading ZIP file:", error);
+      alert("Failed to download the ZIP file.");
+    }
+  };
+
   return (
     <div className="code-editor-container">
+        {selectedRepo && ( // ✅ Show download button only if ZIP file link exists
+        <button type="button" className="btn btn-success mt-2" onClick={handleDownloadZip}>
+          Download ZIP
+        </button>
+      )}
       <label className="d-block text-dark fw-bold mb-2">{label}</label>
       <div className="code-editor-header d-flex align-items-center">
         <img src={getLanguageLogo(language)} alt={language} className="language-logo me-2" />
@@ -36,13 +76,15 @@ export default function CodeEditor({ label, name, isSource, code, setCode, langu
         rows="6"
         value={code}
         onChange={(e) => setCode(e.target.value)}
-        readOnly={!isSource} // Only allow editing for the source code
+        readOnly={!isSource} // ✅ Only allow editing for the source code
       />
+      
       {!isSource && (
-        <button type="button" className="btn btn-primary mt-2" onClick={handleCopy}>
+        <button type="button" className="btn btn-primary mt-2 me-2" onClick={handleCopy}>
           Copy Code
         </button>
       )}
+
     </div>
   );
 }

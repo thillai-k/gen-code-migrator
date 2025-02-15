@@ -25,24 +25,6 @@ const FileStatus = ({ uploadedFiles, convertedFiles, confidenceScore }) => {
           </div>
         </div>
 
-        {/* Uploaded Files */}
-        {/* <div className="col-md-3 connector">
-          <div className="container connector-container">
-            <div className="row justify-content-center">
-              <div className="col-md-4">
-                <div className="box">
-                  <div className="code-readout">{uploadedFiles}</div>
-                </div>
-              </div>
-            </div>
-            <div className="row justify-content-center">
-              <div className="col-md-12 text-center">
-                <div className="connector-title">Uploaded Files</div>
-              </div>
-            </div>
-          </div>
-        </div> */}
-
         {/* Converted Files */}
         <div className="col-md-3 connector">
           <div className="container connector-container">
@@ -71,7 +53,10 @@ const FileStatus = ({ uploadedFiles, convertedFiles, confidenceScore }) => {
                     <img src={src} alt="Meter Icon" className="connector-logo" />
                   </div>
                   <div className="connector-sub-title">
-                    {index === 0 ? "Analysis of code transformation" : `Confidence Score: ${confidenceScore}%`}
+                  {index === 0 
+  ? `Analysis of code transformation: ${uploadedFiles ? ((convertedFiles / uploadedFiles) * 100).toFixed(2) + "%" : "0%"}` 
+  : `Avg Confidence Score: ${confidenceScore ? (confidenceScore * 100).toFixed(2) + "%" : "0%"}`}
+
                   </div>
                 </div>
               ))}
