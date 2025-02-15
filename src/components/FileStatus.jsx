@@ -8,7 +8,7 @@ export default function FileStatus({ uploadedFiles, convertedFiles }) {
     const conversionProgress = uploadedFiles ? (convertedFiles / uploadedFiles) * 100 : 0;
 
     return (
-        <div className="file-status-container bg-dark text-light p-3 mb-3 rounded">
+        <div className="file-status-container bg-dark text-light p-3 mb-5 rounded">
             <h5 className="mb-2">File Processing Status</h5>
             
             {/* ✅ Uploaded Files Status */}
