@@ -3,8 +3,8 @@ import GaugeChart from "react-gauge-chart";
 
 const FileStatus = ({ uploadedFiles, convertedFiles, confidenceScore }) => {
     let PercentageFile = 0;
-    PercentageFile = uploadedFiles??(convertedFiles/uploadedFiles);
-    console.log(PercentageFile);
+    PercentageFile = uploadedFiles?((convertedFiles/uploadedFiles)):PercentageFile;
+    
     return (
         <div className="my-4">
             <div className="row">
