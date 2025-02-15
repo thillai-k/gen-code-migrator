@@ -77,9 +77,9 @@ const FileStatus = ({ uploadedFiles, convertedFiles, confidenceScore }) => {
 
                 {/* Confidence Score */}
                 <div className="col-md-3">
-                    <div class="row ">
-                        <div class="col-md-12">
-                            <div class="connector-title bg-primary-light">
+                    <div className="row ">
+                        <div className="col-md-12">
+                            <div className="connector-title bg-primary-light">
                             Analysis of code transformation
                             </div>
                         </div>
@@ -101,9 +101,9 @@ const FileStatus = ({ uploadedFiles, convertedFiles, confidenceScore }) => {
                 </div>
 
                 <div className="col-md-3">
-                    <div class="row ">
-                        <div class="col-md-12">
-                            <div class="connector-title bg-blue-light">
+                    <div className="row ">
+                        <div className="col-md-12">
+                            <div className="connector-title bg-blue-light">
                                 Avg Confidence Score
                             </div>
                         </div>

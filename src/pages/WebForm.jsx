@@ -272,7 +272,7 @@ export default function WebForm() {
                                             Convert Code {progress}%
                                         </div>
                                         <div
-                                            class="progress"
+                                            className="progress"
                                             role="progressbar"
                                             aria-label="Default striped example"
                                             aria-valuenow={progress}
@@ -280,7 +280,7 @@ export default function WebForm() {
                                             aria-valuemax="100"
                                         >
                                             <div
-                                                class="progress-bar progress-bar-striped"
+                                                className="progress-bar progress-bar-striped"
                                                 style={{
                                                     width: `${progress}%`,
                                                 }}
