@@ -7,7 +7,7 @@ import FileUploader from "../components/FileUploader";
 import Button from "../components/Button";
 import CodeEditor from "../components/CodeEditor";
 import ProgressMeter from "../components/ProgressMeter";
-import FileStatus from "../components/FileStatus"; 
+import FileStatus from "../components/FileStatus";
 import "../styles/global.css";
 
 export default function WebForm() {
@@ -40,7 +40,7 @@ export default function WebForm() {
                     throw new Error("Failed to fetch file status");
                 }
                 const data = await response.json();
-                
+
                 // ✅ Update states
                 setUploadedFiles(data.total_uploaded || 0);
                 setConvertedFiles(data.total_converted || 0);
@@ -48,10 +48,10 @@ export default function WebForm() {
                 console.error("Error fetching file status:", error);
             }
         };
-    
+
         fetchFileStatus();
         const interval = setInterval(fetchFileStatus, 5000); // ✅ Auto-refresh every 5s
-    
+
         return () => clearInterval(interval);
     }, []);
 
@@ -74,11 +74,11 @@ export default function WebForm() {
             setValue("file_name", file.name);
         }
     };
-        
+
     const onSubmit = async (data) => {
         console.log("Form Submitted:", data); // ✅ Corrected reference
         setProgress(50);
-    
+
         try {
             const response = await fetch("https://api.example.com/submit", {
                 method: "POST",
@@ -92,11 +92,11 @@ export default function WebForm() {
                     target_code: targetCode,
                 }),
             });
-    
+
             if (!response.ok) {
                 throw new Error("Failed to submit form");
             }
-    
+
             const result = await response.json();
             console.log("Success:", result);
             setTargetCode(`Converted version of: \n${sourceCode}`);
@@ -107,13 +107,269 @@ export default function WebForm() {
     };
 
     return (
-        <div className="web-form-container container bg-secondary p-5 rounded shadow-lg w-75">
-            <div className="d-flex align-items-center mb-4">
-                <img src="/genpactlogo.png" alt="Company Logo" className="img-fluid m-0" />
-                <header className="app-header">
-                    <h1 className="header-title text-light m-0">Gen-AI Powered Code Migrate</h1>
-                </header>
+        <div className="page-container header">
+            <header className="py-3">
+                <div className="header-container">
+                    <div className="row align-items-center">
+                        <div className="col-auto">
+                            <img src="/genpact_logo.svg" alt="Company Logo" className="gen-logo" />
+                        </div>
+                        <div className="col text-center">
+                            <div className="header-title">Gen-AI Powered Code Migrater</div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <div className="main">
+                {/* First Row - 3 Containers Horizontally */}
+
+                <div className="row monitor-container">
+                    <div className="col-md-3 connector">
+                        <div className="container connector-container">
+                            <div className="row justify-content-center">
+                                <div className="col-md-4">
+                                    <div className="box">
+                                        <img src="/github_logo.svg" alt="GitHub Logo" className="connector-logo" />
+                                    </div>
+                                </div>
+                                <div className="col-md-4">
+                                    <div className="box">
+                                        <img src="/aws_cloudformation.svg" alt="AWS Logo" className="connector-logo" />
+                                    </div>
+                                </div>
+                                <div className="col-md-4">
+                                    <div className="box">
+                                        <img src="/bitbucket_icon.svg" alt="Bitbucket" className="connector-logo" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="row justify-content-center">
+                                <div className="col-md-12 text-center">
+                                    <div className="connector-title">Code repo connector</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="col-md-3 connector">
+                        <div className="container connector-container">
+                            <div className="row justify-content-center">
+                                <div className="col-md-4">
+                                    <div className="box">
+                                        <div className="code-readout">0</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="row justify-content-center">
+                                <div className="col-md-12 text-center">
+                                    <div className="connector-title">Number of code to be converted</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div className="col-md-3 connector">
+                        <div className="container connector-container">
+                            <div className="row analysis-container">
+                                <div className="col-md-4">
+                                    <div className="box">
+                                        <img src="/meter_group.svg" alt="GitHub Logo" className="connector-logo" />
+                                    </div>
+                                    <div className="connector-sub-title">Analysis of code which can be transformed through automation</div>
+                                </div>
+                                <div className="col-md-4">
+                                    <div className="box">
+                                        <img src="/meter_group.svg" alt="Bitbucket" className="connector-logo" />
+                                    </div>
+                                    <div className="connector-analysis-sub-title">Confidence Score</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Second Row - 2 Containers Horizontally */}
+                <div className="row justify-content-around">
+                    <div className="col-5 repo-detail-container align-contents">
+                        <div>
+                            <div className="row justify-content-around">
+                                <div className="col-md-2 align-contents">
+                                    <div className="connector-title title-width">Connect from</div>
+                                </div>
+                                <div className="col-md-4 align-contents">
+                                    <div className="row connector-options justify-content-center">
+                                        <div className="col-md-4">
+                                            <div className="box connector-options-box">
+                                                <img src="/github_logo.svg" alt="GitHub Logo" className="connector-sub-logo" />
+                                            </div>
+                                        </div>
+                                        <div className="col-md-4">
+                                            <div className="box connector-options-box">
+                                                <img src="/aws_cloudformation.svg" alt="AWS Logo" className="connector-sub-logo" />
+                                            </div>
+                                        </div>
+                                        <div className="col-md-4">
+                                            <div className="box connector-options-box">
+                                                <img src="/bitbucket_icon.svg" alt="Bitbucket" className="connector-sub-logo" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-md-4 align-contents">
+                                    <InputField label="Source Path" name="repoPath1" register={register} errors={errors} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="col-5 repo-detail-container align-contents">
+                        <div>
+                            <div className="row justify-content-around">
+                                <div className="col-md-2 align-contents">
+                                    <div className="connector-title title-width">Connect to</div>
+                                </div>
+                                <div className="col-md-4 align-contents">
+                                    <div className="row connector-options justify-content-center">
+                                        <div className="col-md-4">
+                                            <div className="box connector-options-box">
+                                                <img src="/github_logo.svg" alt="GitHub Logo" className="connector-sub-logo" />
+                                            </div>
+                                        </div>
+                                        <div className="col-md-4">
+                                            <div className="box connector-options-box">
+                                                <img src="/aws_cloudformation.svg" alt="AWS Logo" className="connector-sub-logo" />
+                                            </div>
+                                        </div>
+                                        <div className="col-md-4">
+                                            <div className="box connector-options-box">
+                                                <img src="/bitbucket_icon.svg" alt="Bitbucket" className="connector-sub-logo" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-md-4 align-contents">
+                                    <InputField label="Target Path" name="repoPath2" register={register} errors={errors} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Third Row - 3 Containers Horizontally */}
+                <div className="row justify-content-around">
+                    <div className="col-5 repo-detail-container align-contents">
+                        <div>
+                            <div className="row justify-content-around">
+                                <div className="col-md-2 align-contents">
+                                    <div className="connector-title title-width">Convert from</div>
+                                </div>
+                                <div className="col-md-4 align-contents">
+                                    <div className="row connector-options justify-content-center">
+                                        <div className="col-md-4">
+                                            <div className="box connector-options-box">
+                                                <img src="/aws-logo-2.svg" alt="GitHub Logo" className="connector-sub-logo" />
+                                            </div>
+                                        </div>
+                                        <div className="col-md-4">
+                                            <div className="box connector-options-box">
+                                                <img src="/convert-to-logo-2.svg" alt="AWS Logo" className="connector-sub-logo" />
+                                            </div>
+                                        </div>
+                                        <div className="col-md-4">
+                                            <div className="box connector-options-box">
+                                                <img src="/spark-logo-2.svg" alt="Bitbucket" className="connector-sub-logo" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-md-4 align-contents">
+                                    <LanguageSelect label="Source Language" name="source_format" value={sourceLang} onChange={setSourceLang} register={register} errors={errors} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="col-5 repo-detail-container align-contents">
+                        <div>
+                            <div className="row justify-content-around">
+                                <div className="col-md-2 align-contents">
+                                    <div className="connector-title title-width">Convert to</div>
+                                </div>
+                                <div className="col-md-4 align-contents">
+                                    <div className="row connector-options justify-content-center">
+                                        <div className="col-md-4">
+                                            <div className="box connector-options-box">
+                                                <img src="/aws-logo-2.svg" alt="GitHub Logo" className="connector-sub-logo" />
+                                            </div>
+                                        </div>
+                                        <div className="col-md-4">
+                                            <div className="box connector-options-box">
+                                                <img src="/convert-to-logo-2.svg" alt="AWS Logo" className="connector-sub-logo" />
+                                            </div>
+                                        </div>
+                                        <div className="col-md-4">
+                                            <div className="box connector-options-box">
+                                                <img src="/spark-logo-2.svg" alt="Bitbucket" className="connector-sub-logo" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-md-4 align-contents">
+                                    <LanguageSelect label="Target Language" name="target_format" value={targetLang} onChange={setTargetLang} register={register} errors={errors} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="row justify-content-around submit-section">
+                    <div className="row col-3">
+                        <Button type="submit" className="btn convert-btn w-100">Transform <img className="checkmark" src="/checkmark.svg" alt="Check" /></Button>
+                    </div>
+                    {/* <div className="col-3">
+                        <Button type="submit" className="btn convert-btn w-100">Transform</Button>
+                    </div>     */}
+                </div>
+
+                <div className="row info-detail justify-content-around">
+                    <div className="col-5 info-detail-container align-contents">
+                        <div className='info-section'>Click to select or drop your input code file here. You can also type the input code below
+                        </div>
+                    </div>
+
+                    <div className="col-5 info-detail-container align-contents">
+                        <div className="info-section">Additional instructions (optional).
+                            Example = "Use async await instead of promises
+                        </div>
+                    </div>
+                </div>
+
+                <div className="row info-detail justify-content-around">
+                    <div className="col-5 align-contents">
+                        <CodeEditor
+                            label="Source Code"
+                            name="source_code"
+                            isSource={true}
+                            code={sourceCode}
+                            setCode={handleCodeChange}
+                            language={sourceLang}
+                        />
+                    </div>
+                    <div className="col-5 align-contents">
+                        <CodeEditor
+                            label="Converted Code"
+                            name="target_code"
+                            isSource={false} // Read-only
+                            code={targetCode}
+                            setCode={setTargetCode}
+                            language={targetLang}
+                        />
+                    </div>
+                </div>
             </div>
+
+
             <FileStatus uploadedFiles={uploadedFiles} convertedFiles={convertedFiles} />
 
             <form onSubmit={handleSubmit(onSubmit)} className="w-100">
