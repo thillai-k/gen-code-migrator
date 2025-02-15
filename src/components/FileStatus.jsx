@@ -80,7 +80,7 @@ const FileStatus = ({ uploadedFiles, convertedFiles, confidenceScore }) => {
                     <div class="row ">
                         <div class="col-md-12">
                             <div class="connector-title bg-primary-light">
-                                Analysis of code transformation
+                            Analysis of code transformation
                             </div>
                         </div>
                     </div>
@@ -92,7 +92,7 @@ const FileStatus = ({ uploadedFiles, convertedFiles, confidenceScore }) => {
                                     nrOfLevels={30}
                                     colors={["#FF5F6D", "#FFC371"]}
                                     arcWidth={0.3}
-                                    percent={0}
+                                    percent={uploadedFiles ? ((convertedFiles / uploadedFiles) * 100).toFixed(2) : 0}
                                     textColor="#4650dd"
                                 />
                             </div>
@@ -104,7 +104,7 @@ const FileStatus = ({ uploadedFiles, convertedFiles, confidenceScore }) => {
                     <div class="row ">
                         <div class="col-md-12">
                             <div class="connector-title bg-blue-light">
-                                Confidence Score
+                                Avg Confidence Score
                             </div>
                         </div>
                     </div>
@@ -114,7 +114,7 @@ const FileStatus = ({ uploadedFiles, convertedFiles, confidenceScore }) => {
                                 <GaugeChart
                                     id="gauge-chart6"
                                     nrOfLevels={15}
-                                    percent={confidenceScore}
+                                    percent={confidenceScore ? (confidenceScore * 100).toFixed(2) : 0}
                                     needleColor="#345243"
                                     textColor="#0d6efd"
                                 />
