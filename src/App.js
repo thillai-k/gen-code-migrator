@@ -23,7 +23,7 @@ import Header from "./components/header/Header";
 
 export default function App() {
     return (
-        <div className="min-vh-100 bg-body-tertiary">
+        <div className="min-vh-100 bg-body-secondary">
             <Header />
             <WebForm />
         </div>

@@ -114,6 +114,16 @@ export default function WebForm() {
 
     return (
         <div className="web-form-container container">
+            <h3 style={{color:"#004e9e"}}><strong>Dashboard</strong></h3>
+            <div className="row">
+                <div className="col-4">
+                Code repo connector
+                </div>
+                <div className="col-4">
+                Number of code to be converted
+                </div>
+                <div className="col-4"></div>
+            </div>
             <FileStatus
                 uploadedFiles={uploadedFiles}
                 convertedFiles={convertedFiles}
