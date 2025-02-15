@@ -11,7 +11,6 @@ export default function CodeEditor({
   selectedRepo,
   showDownloadBtn
 }) {
-  console.log(zipFileUrl);
   const getLanguageLogo = (lang) => {
     const logos = {
       "AWS EMR Pyspark": "/emr.svg",
