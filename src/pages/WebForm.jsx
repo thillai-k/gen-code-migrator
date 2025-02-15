@@ -80,7 +80,7 @@ export default function WebForm() {
                 "https://code-crafter-api-603657590586.us-central1.run.app/convert",
                 {
                     method: "POST",
-                    mode: "no-cors",
+                    mode: "cors",
                     body: formData,
                 },
                 60000
