@@ -114,7 +114,7 @@ export default function WebForm() {
 
     return (
         <div className="web-form-container container">
-            <h3 style={{color:"#004e9e"}}><strong>Dashboard</strong></h3>
+            <h3 style={{color:"#0a58ca"}}><strong>Dashboard</strong></h3>
             <div className="row">
                 <div className="col-4">
                 Code repo connector
@@ -235,7 +235,7 @@ export default function WebForm() {
                                     >
                                         <div
                                             class="progress-bar progress-bar-striped"
-                                            style={{width:`${progress}%`}}
+                                            style={{width:`10%`}}
                                         ></div>
                                     </div>
                                 </Button>

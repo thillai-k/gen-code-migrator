@@ -1,15 +1,15 @@
 .cm-header {
-    background-color: #001f3f;
+    background-color: #0a58ca;
     color: white;
     text-align: center;
-    border-bottom: 0.1875rem solid #0056b3;
+    border-bottom: 0.1875rem solid #000;
     width: 100%;
     margin-block-end: 1rem;
     position: relative;
 
     &:after {
         content: "";
-        background: #0056b3;
+        background: #000;
         width: 5000px;
         left: 50%;
         position: absolute;
@@ -33,14 +33,14 @@
 
             &:after {
                 content: "";
-                background: #0056b3;
+                background: #000000;
                 position: absolute;
                 width: 200px;
                 z-index: 0;
                 inset-block: 0;
-                border-right: 60px solid #001f3f;
-                border-top: 0 solid #0056b3;
-                border-bottom: 66px solid #0056b3;
+                border-right: 60px solid #0a58ca;
+                border-top: 0 solid #000000;
+                border-bottom: 66px solid #000000;
                 left: 0;
                 z-index: 0;
             }
@@ -49,7 +49,7 @@
 
     &--title {
         font-size: 1.5rem;
-        font-weight: 700;
+        font-weight: 600;
         margin: 0;
     }
 

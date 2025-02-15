@@ -27,7 +27,7 @@ const Header = () => {
                         <a className="icon-link" href="/">
                             <FaSearch size={24} color="white" />
                         </a>
-                        <span className="divider border-secondary"></span>
+                        <span className="divider border-dark"></span>
                         <a className="icon-link" href="/">
                             <FaUserCircle size={24} color="white" />
                         </a>
