@@ -29,31 +29,10 @@ export default function WebForm() {
     const [targetLang, setTargetLang] = useState("");
     const [fileName, setFileName] = useState("");
     const [uploadedFiles, setUploadedFiles] = useState(0);   // ✅ Track uploaded files from API
-    const [convertedFiles, setConvertedFiles] = useState(0); // ✅ Track converted files from API
+    const [convertedFiles, setConvertedFiles] = useState(0);
+    const [accuracy, setConfidenceScore] = useState(0); // ✅ Track converted files from API
 
     // ✅ Fetch file status from API on mount
-    useEffect(() => {
-        const fetchFileStatus = async () => {
-            try {
-                const response = await fetch("https://api.example.com/file-status");  // ✅ Replace with actual API
-                if (!response.ok) {
-                    throw new Error("Failed to fetch file status");
-                }
-                const data = await response.json();
-
-                // ✅ Update states
-                setUploadedFiles(data.total_uploaded || 0);
-                setConvertedFiles(data.total_converted || 0);
-            } catch (error) {
-                console.error("Error fetching file status:", error);
-            }
-        };
-
-        fetchFileStatus();
-        const interval = setInterval(fetchFileStatus, 5000); // ✅ Auto-refresh every 5s
-
-        return () => clearInterval(interval);
-    }, []);
 
     // Sync source_code with react-hook-form
     useEffect(() => {
@@ -74,38 +53,46 @@ export default function WebForm() {
             setValue("file_name", file.name);
         }
     };
+const [loading, setLoading] = useState(false);
+const onSubmit = async (data) => {
+    if (loading) return; // Prevent multiple clicks
 
-    const onSubmit = async (data) => {
-        console.log("Form Submitted:", data); // ✅ Corrected reference
-        setProgress(50);
+    console.log("Form Submitted:", data);
+    setProgress(50);
+    setLoading(true);
 
-        try {
-            const response = await fetch("https://api.example.com/submit", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    ...data,
-                    source_code: sourceCode, // ✅ Ensure it's correctly sent
-                    file_name: fileName, // ✅ Corrected reference
-                    target_code: targetCode,
-                }),
-            });
+    try {
+        const formData = new FormData();
+        formData.append("source_code", sourceCode);
+        formData.append("file_name", fileName);
+        formData.append("target_code", targetCode);
 
-            if (!response.ok) {
-                throw new Error("Failed to submit form");
-            }
+        Object.entries(data).forEach(([key, value]) => formData.append(key, value));
 
-            const result = await response.json();
-            console.log("Success:", result);
-            setTargetCode(`Converted version of: \n${sourceCode}`);
-            setProgress(100);
-        } catch (error) {
-            console.error("Error:", error);
+        const response = await fetch("https://code-crafter-api-603657590586.us-central1.run.app/convert", {
+            method: "POST",
+            mode: "cors",
+            body: formData,
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${await response.text()}`);
         }
-    };
 
+        const parsedResult = await response.json();
+        console.log("Success:", parsedResult);
+
+        setUploadedFiles(parsedResult.total_files ?? 0);
+        setConvertedFiles(parsedResult.convertible_files ?? 0);
+        setConfidenceScore(parsedResult.confidence_score ?? 0);
+        setTargetCode(`Converted version of: \n${parsedResult.converted_code}`);
+        setProgress(100);
+    } catch (error) {
+        console.error("Error:", error);
+    } finally {
+        setLoading(false);
+    }
+};
     return (
         <div className="page-container header">
             <header className="py-3">
@@ -120,90 +107,7 @@ export default function WebForm() {
                     </div>
                 </div>
             </header>
-            <div className="main">
-                {/* First Row - 3 Containers Horizontally */}
-
-                <div className="row monitor-container">
-                    <div className="col-md-3 connector">
-                        <div className="container connector-container">
-                            <div className="row justify-content-center">
-                                <div className="col-md-4">
-                                    <div className="box">
-                                        <img src="/github_logo.svg" alt="GitHub Logo" className="connector-logo" />
-                                    </div>
-                                </div>
-                                <div className="col-md-4">
-                                    <div className="box">
-                                        <img src="/aws_cloudformation.svg" alt="AWS Logo" className="connector-logo" />
-                                    </div>
-                                </div>
-                                <div className="col-md-4">
-                                    <div className="box">
-                                        <img src="/bitbucket_icon.svg" alt="Bitbucket" className="connector-logo" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="row justify-content-center">  
-                                <div className="col-md-12 text-center">
-                                    <div className="connector-title">Code repo connector</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="col-md-3 connector">
-                        <div className="container connector-container">
-                            <div className="row justify-content-center">
-                                <div className="col-md-4">
-                                    <div className="box">
-                                        <div className="code-readout">0</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="row justify-content-center">  
-                                <div className="col-md-12 text-center">
-                                    <div className="connector-title">Number of code to be converted</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div className="col-md-3 connector">
-                        <div className="container connector-container">
-                            <div className="row analysis-container">
-                                <div className="col-md-4">
-                                    <div className="box">
-                                        <img src="/meter_group.svg" alt="GitHub Logo" className="connector-logo" />
-                                    </div>
-                                    <div className="connector-sub-title">Analysis of code which can be transformed through automation</div>
-                                </div>
-                                <div className="col-md-4">
-                                    <div className="box">
-                                        <img src="/meter_group.svg" alt="Bitbucket" className="connector-logo" />
-                                    </div>
-                                    <div className="connector-analysis-sub-title">Confidence Score</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Second Row - 3 Containers Horizontally */}
-                <section className="row">
-                    <div className="col-md-4">Container 4</div>
-                    <div className="col-md-4">Container 5</div>
-                    <div className="col-md-4">Container 6</div>
-                </section>
-
-                {/* Third Row - 3 Containers Horizontally */}
-                <section className="row">
-                    <div className="col-md-4">Container 7</div>
-                    <div className="col-md-4">Container 8</div>
-                    <div className="col-md-4">Container 9</div>
-                </section>
-            </div>
-            <FileStatus uploadedFiles={uploadedFiles} convertedFiles={convertedFiles} />
+            <FileStatus uploadedFiles={uploadedFiles} convertedFiles={convertedFiles} confidenceScore = {accuracy} />
 
             <form onSubmit={handleSubmit(onSubmit)} className="w-100">
                 <div className="row g-3">
@@ -228,7 +132,7 @@ export default function WebForm() {
                 </div>
                 <div className="converter-wrapper mt-4 p-4 bg-light rounded">
                     <div className="editor-section">
-                        <h4>Source Code</h4>
+                    
                         <FileUploader onFileUpload={handleFileUpload} />
                         <CodeEditor
                             label="Source Code"
@@ -240,11 +144,14 @@ export default function WebForm() {
                         />
                     </div>
                     <div className="text-center my-3">
-                        <Button type="submit" className="btn btn-primary w-100">Convert Code</Button>
+                        <Button type="submit" className="btn btn-primary w-100">
+                        {loading ? <span className="loader"></span> : "Convert Code"}
+                        </Button>
                         <ProgressMeter progress={progress} />
                     </div>
-                    <div className="editor-section">
-                        <h4>Converted Code</h4>
+                    <div className="editor-section resp">
+                    <div
+                         className="rounded resp"></div>
                         <CodeEditor
                             label="Converted Code"
                             name="target_code"

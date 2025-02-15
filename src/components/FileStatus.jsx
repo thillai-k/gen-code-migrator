@@ -1,33 +1,87 @@
 import React from "react";
-import { CircleCheck, UploadCloud } from "lucide-react"; // ✅ Import icons
-import ProgressMeter from "./ProgressMeter";
 
-export default function FileStatus({ uploadedFiles, convertedFiles }) {
-    // ✅ Calculate progress percentage
-    const uploadProgress = uploadedFiles ? (uploadedFiles / 10) * 100 : 0;
-    const conversionProgress = uploadedFiles ? (convertedFiles / uploadedFiles) * 100 : 0;
-
-    return (
-        <div className="file-status-container bg-dark text-light p-3 mb-3 rounded">
-            <h5 className="mb-2">File Processing Status</h5>
-            
-            {/* ✅ Uploaded Files Status */}
-            <div className="d-flex justify-content-between align-items-center">
-                <div className="d-flex align-items-center">
-                    <UploadCloud size={24} className="text-warning me-2" /> {/* ✅ Upload Icon */}
-                    <span>Files Uploaded: {uploadedFiles}</span>
+const FileStatus = ({ uploadedFiles, convertedFiles, confidenceScore }) => {
+  return (
+    <div className="main">
+      <div className="row monitor-container">
+        
+        {/* Code Repo Connector */}
+        <div className="col-md-3 connector">
+          <div className="container connector-container">
+            <div className="row justify-content-center">
+              {["/github_logo.svg", "/aws_cloudformation.svg", "/bitbucket_icon.svg"].map((src, index) => (
+                <div className="col-md-4" key={index}>
+                  <div className="box">
+                    <img src={src} alt="Connector Logo" className="connector-logo" />
+                  </div>
                 </div>
-                <ProgressMeter progress={uploadProgress} />
+              ))}
             </div>
-
-            {/* ✅ Converted Files Status */}
-            <div className="d-flex justify-content-between align-items-center mt-2">
-                <div className="d-flex align-items-center">
-                    <CircleCheck size={24} className="text-success me-2" /> {/* ✅ Check Icon */}
-                    <span>Files Converted: {convertedFiles}</span>
-                </div>
-                <ProgressMeter progress={conversionProgress} />
+            <div className="row justify-content-center">
+              <div className="col-md-12 text-center">
+                <div className="connector-title">Code Repo Connector</div>
+              </div>
             </div>
+          </div>
         </div>
-    );
-}
+
+        {/* Uploaded Files */}
+        {/* <div className="col-md-3 connector">
+          <div className="container connector-container">
+            <div className="row justify-content-center">
+              <div className="col-md-4">
+                <div className="box">
+                  <div className="code-readout">{uploadedFiles}</div>
+                </div>
+              </div>
+            </div>
+            <div className="row justify-content-center">
+              <div className="col-md-12 text-center">
+                <div className="connector-title">Uploaded Files</div>
+              </div>
+            </div>
+          </div>
+        </div> */}
+
+        {/* Converted Files */}
+        <div className="col-md-3 connector">
+          <div className="container connector-container">
+            <div className="row justify-content-center">
+              <div className="col-md-4">
+                <div className="box">
+                  <div className="code-readout">{convertedFiles}</div>
+                </div>
+              </div>
+            </div>
+            <div className="row justify-content-center">
+              <div className="col-md-12 text-center">
+                <div className="connector-title">Converted Files</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Confidence Score */}
+        <div className="col-md-3 connector">
+          <div className="container connector-container">
+            <div className="row analysis-container">
+              {["/meter_group.svg", "/meter_group.svg"].map((src, index) => (
+                <div className="col-md-4" key={index}>
+                  <div className="box">
+                    <img src={src} alt="Meter Icon" className="connector-logo" />
+                  </div>
+                  <div className="connector-sub-title">
+                    {index === 0 ? "Analysis of code transformation" : `Confidence Score: ${confidenceScore}%`}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+};
+
+export default FileStatus;

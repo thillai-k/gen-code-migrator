@@ -24,7 +24,7 @@ export default function CodeEditor({ label, name, isSource, code, setCode, langu
 
   return (
     <div className="code-editor-container">
-      <label className="d-block text-light fw-bold mb-2">{label}</label>
+      <label className="d-block text-dark fw-bold mb-2">{label}</label>
       <div className="code-editor-header d-flex align-items-center">
         <img src={getLanguageLogo(language)} alt={language} className="language-logo me-2" />
         <span className="language-name">{language}</span>
