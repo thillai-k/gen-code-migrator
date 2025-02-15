@@ -2,6 +2,7 @@ import React from "react";
 
 export default function LanguageSelect({ label, value, onChange, register, errors, name }) {
   const languages = ["None", "AWS EMR Pyspark",
+  "AWS Pyspark",
   "AWS Glue Pyspark",
   "AWS Sagemaker ML Pyspark",
   "Text",

@@ -14,7 +14,8 @@ export default function CodeEditor({
   console.log(zipFileUrl);
   const getLanguageLogo = (lang) => {
     const logos = {
-      "AWS EMR Pyspark": "/EMR.svg",
+      "AWS EMR Pyspark": "/emr.svg",
+      "AWS Pyspark": "/aws_pyspark.png",
       "AWS Glue Pyspark": "/glue.svg",
       "AWS Sagemaker ML Pyspark": "",
       "Text": "",
