@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import InputField from "../components/InputField";
 import SelectField from "../components/SelectFieldRepository";
 import LanguageSelect from "../components/LanguageSelect";
 import FileUploader from "../components/FileUploader";
 import Button from "../components/Button";
 import CodeEditor from "../components/CodeEditor";
-import ProgressMeter from "../components/ProgressMeter";
 import FileStatus from "../components/FileStatus";
 import "../styles/global.css";
 
