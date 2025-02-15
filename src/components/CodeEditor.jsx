@@ -13,7 +13,7 @@ export default function CodeEditor({
 }) {
   const getLanguageLogo = (lang) => {
     const logos = {
-      "AWS EMR Pyspark": "/emr.svg",
+      "AWS EMR Pyspark": "/aws_emr.svg",
       "AWS Pyspark": "/aws_pyspark.png",
       "AWS Glue Pyspark": "/glue.svg",
       "AWS Sagemaker ML Pyspark": "",
