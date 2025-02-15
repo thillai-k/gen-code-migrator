@@ -17,9 +17,9 @@ export default function CodeEditor({
       "AWS Glue Pyspark": "/glue.svg",
       "AWS Sagemaker ML Pyspark": "",
       "Text": "",
-      "SQL": "",
+      "SQL": "/sql-server.png",
       "Databricks Pyspark": "/databricks.png",
-      "Databricks ML Pyspark": "",
+      "Databricks ML Pyspark": "/AmazonSageMaker.jpeg",
     };
     return logos[lang] || "/default.png";
   };
@@ -40,7 +40,7 @@ export default function CodeEditor({
     }
 
     try {
-      const response = await fetch("https://code-crafter-api-603657590586.us-central1.run.app/download_zip");
+      const response = await fetch(`https://code-crafter-api-603657590586.us-central1.run.app${zipFileUrl}`);
       console.log(zipFileUrl);
       if (!response.ok) throw new Error(`Failed to download: ${response.statusText}`);
 

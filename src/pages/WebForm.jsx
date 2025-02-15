@@ -102,17 +102,7 @@ export default function WebForm() {
                 setTargetCode(
                     `Converted version of: \n${parsedResult.avg_converted_code}`
                 );
-                const contentDisposition = parsedResult.headers.get(
-                    "Content-Disposition"
-                );
-                let filename = "converted_files.zip";
-                if (contentDisposition) {
-                    const match = contentDisposition.match(/filename="(.+)"/);
-                    if (match && match[1]) {
-                        filename = match[1];
-                    }
-                }
-                setTargetZipFileUrl(filename);
+                setTargetZipFileUrl(parsedResult.zip_download_url);
             } else {
                 setConfidenceScore(parsedResult.confidence_score ?? 0);
                 setTargetCode(
